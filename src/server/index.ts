@@ -4,7 +4,7 @@ import axios from "axios"
 import { CountryData } from "./types/countryData"
 import { ExchangeRates } from "./types/exchangeRates"
 
-dotenv.config({ path: "./src/config.env" })
+dotenv.config({ path: "./src/server/config.env" })
 
 const app: Application = express()
 
