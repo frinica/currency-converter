@@ -3,12 +3,17 @@ import dotenv from "dotenv"
 import axios from "axios"
 import { CountryData } from "./types/countryData"
 import { ExchangeRates } from "./types/exchangeRates"
+import bcrypt from "bcrypt"
 
 dotenv.config({ path: "./src/server/config.env" })
 
+const users = require("./data").userDB
+const bodyParser = require("body-parser")
+const urlEncodedParser = bodyParser.urlencoded({ extended: false })
 const app: Application = express()
-
 const port = process.env.PORT || 8001
+
+/* app.use(bodyParser.urlencoded({ extended: false })) */
 
 app.get("/", (req: Request, res: Response): void => {
   res.send("Server is running!")
@@ -43,6 +48,28 @@ app.get("/currency", async (req: Request, res: Response) => {
     rates: exchangeRatesData.data.rates,
   }
   res.send(filteredExchangeRates)
+})
+
+// LOGIN user
+app.post("/login", urlEncodedParser, async (req: Request, res: Response) => {
+  try {
+    let userExists = users.find((data: any) => req.body.email === data.email)
+    if (userExists) {
+      let passwordInput = req.body.password
+      let passwordStored = userExists.password
+      const passwordMatch = passwordInput === passwordStored
+      if (passwordMatch) {
+        res.send("Login sucessful")
+      } else {
+        res.send("Invalid email or password")
+      }
+    } else {
+      res.send("Invalid email or password")
+    }
+  } catch (error) {
+    console.log(error)
+    res.send("Internal server error")
+  }
 })
 
 app.listen(port, (): void => {
