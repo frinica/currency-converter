@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import axios from "axios"
 import { CountryData } from "./types/countryData"
 import { ExchangeRates } from "./types/exchangeRates"
-import bcrypt from "bcrypt"
+import { getJWT } from "./utils"
 
 dotenv.config({ path: "./src/server/config.env" })
 
@@ -59,16 +59,17 @@ app.post("/login", urlEncodedParser, async (req: Request, res: Response) => {
       let passwordStored = userExists.password
       const passwordMatch = passwordInput === passwordStored
       if (passwordMatch) {
-        res.send("Login sucessful")
+        const token = getJWT(req.body.email)
+        res.status(200).send(token)
       } else {
-        res.send("Invalid email or password")
+        res.status(400).send("Invalid email or password")
       }
     } else {
-      res.send("Invalid email or password")
+      res.status(400).send("Invalid email or password")
     }
   } catch (error) {
     console.log(error)
-    res.send("Internal server error")
+    res.status(500).send("Internal server error")
   }
 })
 
