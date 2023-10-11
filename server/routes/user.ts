@@ -4,10 +4,10 @@ import { getJWT } from "../utils"
 
 const router = express.Router()
 const users = require("../data").userDB
-const bodyParser = require("body-parser")
-const urlEncodedParser = bodyParser.urlencoded({ extended: false })
+/* const bodyParser = require("body-parser")
+const urlEncodedParser = bodyParser.urlencoded({ extended: false }) */
 
-router.post("/login", urlEncodedParser, async (req: Request, res: Response) => {
+router.post("/login", async (req: Request, res: Response) => {
   try {
     let userExists = users.find((data: any) => req.body.email === data.email)
     if (userExists) {
