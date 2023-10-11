@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react"
+import { useState } from "react"
+import axios from "axios"
 
 interface Credentials {
   email: string
@@ -6,10 +7,12 @@ interface Credentials {
 }
 
 export const Login = () => {
+  const apiURL = process.env.REACT_APP_API_URL
   const [credentials, setCredentials] = useState<Credentials>({
     email: "",
     password: "",
   })
+  const { email, password } = credentials
 
   const onChange = (e: any) => {
     setCredentials((prevState) => ({
@@ -18,10 +21,39 @@ export const Login = () => {
     }))
   }
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    login(credentials)
+  }
+
+  const login = async (credentials: Credentials) => {
+    try {
+      const res = await axios.post(apiURL + "user/login")
+      if (res.data.token) {
+        localStorage.setItem("access_token", res.data)
+      }
+    } catch (error) {
+      return error
+    }
+  }
+
   return (
     <>
       <section>
         <h2>SIGN IN</h2>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" value={email} onChange={onChange} />
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+          />
+          <button type="submit">Sign in</button>
+        </form>
       </section>
     </>
   )
