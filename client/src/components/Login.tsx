@@ -14,14 +14,14 @@ export const Login = () => {
   })
   const { email, password } = credentials
 
-  const onChange = (e: any) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }))
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     login(credentials)
   }
