@@ -18,9 +18,11 @@ router.post("/login", async (req: Request, res: Response) => {
         const token = getJWT(req.body.email)
         res.status(200).send(token)
       } else {
+        console.log("ERROR IN USER ROUTE")
         res.status(400).send("Invalid email or password")
       }
     } else {
+      console.log("ERROR IN USER ROUTE")
       res.status(400).send("Invalid email or password")
     }
   } catch (error) {
