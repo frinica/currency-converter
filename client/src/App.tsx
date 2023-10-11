@@ -5,7 +5,7 @@ import { Home } from "./components/Home"
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
-  const [token, setToken] = useState<string | null>(null)
+  const [token, setToken] = useState<string>("")
 
   const checkIfLoggedIn = () => {
     const token = localStorage.getItem("access_token")
@@ -14,7 +14,7 @@ function App() {
       setToken(token)
     } else {
       setIsLoggedIn(false)
-      setToken(null)
+      setToken("")
     }
   }
 
@@ -26,7 +26,7 @@ function App() {
     <div className="App">
       <main>
         {!isLoggedIn && <Login />}
-        {isLoggedIn && <Home />}
+        {isLoggedIn && <Home props={token} />}
       </main>
     </div>
   )
