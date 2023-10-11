@@ -9,6 +9,7 @@ const userRouter = require("./routes/user")
 const countryRouter = require("./routes/countryLookup")
 const exchangeRatesRouter = require("./routes/exchangeRates")
 
+app.use(express.json())
 app.use("/user", userRouter)
 app.use("/country", countryRouter)
 app.use("/currency", exchangeRatesRouter)
