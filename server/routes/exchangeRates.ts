@@ -4,7 +4,7 @@ import axios from "axios"
 import { ExchangeRates } from "../types/exchangeRates"
 import { authUser } from "../middleware"
 
-dotenv.config({ path: "./src/server/config.env" })
+dotenv.config({ path: "./server/config.env" })
 
 const router = express.Router()
 

@@ -1,7 +1,7 @@
 import express, { Request, Response, Application } from "express"
 import dotenv from "dotenv"
 
-dotenv.config({ path: "./src/server/config.env" })
+dotenv.config({ path: "./server/config.env" })
 
 const app: Application = express()
 const port = process.env.PORT || 8001
