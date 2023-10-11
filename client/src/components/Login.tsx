@@ -28,12 +28,13 @@ export const Login = () => {
 
   const login = async (credentials: Credentials) => {
     try {
-      const res = await axios.post(apiURL + "user/login")
-      if (res.data.token) {
+      const res = await axios.post(apiURL + "user/login", credentials)
+      if (res.data) {
         localStorage.setItem("access_token", res.data)
+        window.location.reload()
       }
     } catch (error) {
-      return error
+      console.log(error)
     }
   }
 
@@ -43,15 +44,24 @@ export const Login = () => {
         <h2>SIGN IN</h2>
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" value={email} onChange={onChange} />
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-          />
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={onChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+            />
+          </div>
           <button type="submit">Sign in</button>
         </form>
       </section>
