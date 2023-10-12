@@ -1,18 +1,24 @@
 import { useState } from "react"
 import axios from "axios"
 
-export const Search = ({ props }: { props: string }) => {
+export const Search = ({
+  props,
+  dataFromChild,
+}: {
+  props: string
+  dataFromChild: (arg: Object) => void
+}) => {
   interface countryData {
     fullName: string
     population: number | null
     currencies: Object
   }
+
   const initCountry: countryData = {
     fullName: "",
     population: null,
     currencies: { "": { name: "", symbol: "" } },
   }
-
   const token = props
   const apiURL = process.env.REACT_APP_API_URL
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -69,7 +75,7 @@ export const Search = ({ props }: { props: string }) => {
           <td>{country.population}</td>
           <td>{Object.keys(country.currencies)}</td>
           <td>
-            <button>Add to list</button>
+            <button onClick={() => dataFromChild(country)}>Add to list</button>
           </td>
         </table>
       </section>
