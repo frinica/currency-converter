@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Search } from "./Search"
+import { List } from "./List"
 
 export const Home = ({ props }: { props: string }) => {
   const token = props
@@ -17,6 +18,7 @@ export const Home = ({ props }: { props: string }) => {
     <>
       <h1>Welcome!</h1>
       <Search props={token} dataFromChild={dataFromChild} />
+      <List props={data} />
     </>
   )
 }
