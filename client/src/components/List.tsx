@@ -17,6 +17,7 @@ export const List = ({
   const apiURL = process.env.REACT_APP_API_URL
   const [exchangeRates, setExchangeRates] = useState<Object>({})
   const [filteredRates, setFilteredRates] = useState<any>()
+  const [convertedArr, setConvertedArr] = useState<Object[]>([])
   const listArray = countriesInList.map((country: any) => (
     <tr key={country.fullName}>
       <td>{country.fullName}</td>
@@ -64,8 +65,34 @@ export const List = ({
         newArr.push(convertedArr)
       })
     }
-    return newArr
+    if (newArr.length) {
+      setConvertedArr(newArr)
+    }
   }
+
+  // Concat the arrays with country lookups and info about the converted amounts
+  const concatArrays = (countriesInList: any[], convertedArr: any[]) => {
+    let newArr: Object[] = []
+
+    convertedArr.forEach((item) => {
+      countriesInList.forEach((i) => {
+        if (Object.keys(i.currencies).includes(item.currency)) {
+          const values = {
+            fullName: i.fullName,
+            population: i.population,
+            currencies: item.currency,
+            convertedAmount: item.convertedAmount,
+          }
+          newArr.push(values)
+        }
+      })
+    })
+
+    if (newArr.length) {
+      console.log(newArr)
+    }
+  }
+  concatArrays(countriesInList, convertedArr)
 
   useEffect(() => {
     getExchangeRates()
@@ -87,6 +114,7 @@ export const List = ({
         </tr>
         {listArray}
       </table>
+      {JSON.stringify(convertedArr)}
     </>
   )
 }
