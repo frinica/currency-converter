@@ -1,5 +1,22 @@
-export const List = ({ props }: { props: Object[] }) => {
+import { useState, useEffect } from "react"
+import axios from "axios"
+
+export const List = ({
+  props,
+  userToken,
+  amount,
+}: {
+  props: Object[]
+  userToken: string
+  amount: number | undefined
+}) => {
   const countriesInList = props
+  const token = userToken
+  const convertAmount = amount
+
+  const apiURL = process.env.REACT_APP_API_URL
+  const [exchangeRates, setExchangeRates] = useState<Object>({})
+  const [filteredRates, setFilteredRates] = useState<any>()
   const listArray = countriesInList.map((country: any) => (
     <tr key={country.fullName}>
       <td>{country.fullName}</td>
@@ -7,6 +24,57 @@ export const List = ({ props }: { props: Object[] }) => {
       <td>{Object.keys(country.currencies)}</td>
     </tr>
   ))
+
+  const getExchangeRates = async () => {
+    try {
+      const res = await axios.get(apiURL + "currency", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      if (res.data) {
+        setExchangeRates(res.data.rates)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const filterRates = (list: Object[], rates: Object) => {
+    const ratesArr = Object.entries(rates)
+    let listCurrencies: string[] = []
+
+    // Create a new array with only currency values
+    list.forEach((item: any) => listCurrencies.push(item.currencies))
+
+    // Create a filtered array with exchange rates for the countries that have been added to a list
+    const filteredArr = ratesArr.filter((item) =>
+      listCurrencies.some((obj) => Object.keys(obj).includes(item[0]))
+    )
+
+    setFilteredRates(filteredArr)
+  }
+
+  const currencyConverter = (amount: number | undefined, rates: any[]) => {
+    let newArr: Object[] = []
+    if (rates && amount) {
+      rates.forEach((item: any, index: number) => {
+        const convertedArr = {
+          currency: rates[index][0],
+          convertedAmount: Number((item[1] * amount).toFixed(2)),
+        }
+        newArr.push(convertedArr)
+      })
+    }
+    return newArr
+  }
+
+  useEffect(() => {
+    getExchangeRates()
+    filterRates(countriesInList, exchangeRates)
+  }, [countriesInList])
+
+  useEffect(() => {
+    currencyConverter(convertAmount, filteredRates)
+  }, [convertAmount])
 
   return (
     <>
