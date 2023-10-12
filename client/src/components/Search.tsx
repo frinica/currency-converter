@@ -2,10 +2,10 @@ import { useState } from "react"
 import axios from "axios"
 
 export const Search = ({
-  props,
+  userToken,
   dataFromChild,
 }: {
-  props: string
+  userToken: string
   dataFromChild: (arg: Object) => void
 }) => {
   interface countryData {
@@ -19,7 +19,7 @@ export const Search = ({
     population: null,
     currencies: { "": { name: "", symbol: "" } },
   }
-  const token = props
+  const token = userToken
   const apiURL = process.env.REACT_APP_API_URL
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [country, setCountry] = useState<countryData>(initCountry)
