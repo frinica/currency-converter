@@ -21,7 +21,7 @@ export const Converter = ({
       <section className="sectionWrapper">
         <h3>Convertion time</h3>
         <form onSubmit={handleSubmit}>
-          <label className="convertLabel">€</label>
+          <label className="convertLabel">SEK</label>
           <input
             type="text"
             name="amount"

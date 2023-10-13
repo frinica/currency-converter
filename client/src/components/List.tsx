@@ -63,11 +63,16 @@ export const List = ({
     countriesArr: any[]
   ) => {
     let newArr: Object[] = []
-    if (rates && amount) {
+    let amountInSEK: number = 0
+    if (amount) {
+      amountInSEK = amount / 11.542656
+    } // Convert received EUR to SEK
+
+    if (rates && amountInSEK) {
       rates.forEach((item: any) => {
         countriesArr.forEach((i, index) => {
           if (Object.keys(i.currencies).includes(item[0])) {
-            const value = Number((item[1] * amount).toFixed(2)) // Multiply the exchange rate with the amount and round down to 2 decimals
+            const value = Number((item[1] * amountInSEK).toFixed(2)) // Multiply the exchange rate with the amount and round down to 2 decimals
             const updatedVals = { ...countriesArr[index], convertAmount: value }
             newArr.push(updatedVals)
           }
