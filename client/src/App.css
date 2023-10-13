@@ -80,3 +80,14 @@
   margin-right: 0.5rem;
   font-size: 1.3rem;
 }
+
+.listTable th {
+  padding: 0.5rem;
+  text-align: left;
+  background-color: #ffd46f;
+  color: black;
+}
+
+.listTable td {
+  border: solid 1px #ffd46f;
+}

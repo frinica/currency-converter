@@ -94,16 +94,18 @@ export const List = ({
 
   return (
     <>
-      <h3>List</h3>
-      <table>
-        <tr>
-          <td>Full name</td>
-          <td>Population</td>
-          <td>Currencies</td>
-          <td>Converted amount</td>
-        </tr>
-        {countriesArray}
-      </table>
+      <section className="sectionWrapper">
+        <h3>List</h3>
+        <table className="listTable">
+          <tr>
+            <th>Full name</th>
+            <th>Population</th>
+            <th>Currencies</th>
+            <th>Converted amount</th>
+          </tr>
+          {countriesArray}
+        </table>
+      </section>
     </>
   )
 }
