@@ -37,6 +37,7 @@
 .formInput {
   border: solid 2px #ffd46f;
   width: 60%;
+  height: 1.5rem;
 }
 
 .button {
@@ -45,4 +46,32 @@
   padding: 8px;
   background-color: black;
   color: #ffd46f;
+}
+
+.heading {
+  margin-bottom: 5rem;
+  padding-top: 2rem;
+}
+
+.sectionWrapper {
+  margin-bottom: 3rem;
+}
+
+.searchResults th {
+  padding: 0.5rem;
+  text-align: left;
+  background-color: #ffd46f;
+  color: black;
+}
+
+.searchResults th:last-child {
+  background-color: #282c34;
+}
+
+.searchResults td {
+  border: solid 1px #ffd46f;
+}
+
+.searchResults td:last-child {
+  border: none;
 }
