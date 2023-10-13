@@ -18,12 +18,22 @@ export const Converter = ({
 
   return (
     <>
-      <h3>Convertion time</h3>
-      <form onSubmit={handleSubmit}>
-        <label>€</label>
-        <input type="text" name="amount" value={amount} onChange={onChange} />
-        <button type="submit">Convert</button>
-      </form>
+      <section className="sectionWrapper">
+        <h3>Convertion time</h3>
+        <form onSubmit={handleSubmit}>
+          <label className="convertLabel">€</label>
+          <input
+            type="text"
+            name="amount"
+            value={amount}
+            onChange={onChange}
+            className="formInput"
+          />
+          <button type="submit" className="button">
+            Convert
+          </button>
+        </form>
+      </section>
     </>
   )
 }

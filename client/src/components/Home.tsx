@@ -24,7 +24,7 @@ export const Home = ({ props }: { props: string }) => {
 
   return (
     <>
-      <h1>Welcome!</h1>
+      <h1 className="heading">Country lookup and currency converter</h1>
       <Search userToken={token} dataFromChild={dataFromChild} />
       <Converter emitAmount={emittedAmount} />
       <List props={data} userToken={token} amount={convertAmount} />

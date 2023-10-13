@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <main>
+      <main className="wrapper">
         {!isLoggedIn && <Login />}
         {isLoggedIn && <Home props={token} />}
       </main>

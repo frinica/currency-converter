@@ -51,31 +51,37 @@ export const Search = ({
   return (
     <>
       <h2>Look up a country</h2>
+      <section className="sectionWrapper">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="searchTerm"
+            value={searchTerm}
+            onChange={onChange}
+            className="formInput"
+          />
+          <button type="submit" className="button">
+            Search
+          </button>
+        </form>
+      </section>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="searchTerm"
-          value={searchTerm}
-          onChange={onChange}
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      <section>
+      <section className="sectionWrapper">
         <h3>Results</h3>
-        <table>
+        <table className="searchResults listTable">
           <tr>
-            <td>Full name</td>
-            <td>Population</td>
-            <td>Currencies</td>
-            <td></td>
+            <th>Full name</th>
+            <th>Population</th>
+            <th>Currencies</th>
+            <th></th>
           </tr>
           <td>{country.fullName}</td>
           <td>{country.population}</td>
           <td>{Object.keys(country.currencies)}</td>
           <td>
-            <button onClick={() => dataFromChild(country)}>Add to list</button>
+            <button onClick={() => dataFromChild(country)} className="button">
+              Add to list
+            </button>
           </td>
         </table>
       </section>
