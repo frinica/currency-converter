@@ -15,14 +15,17 @@ export const List = ({
   const convertAmount = amount
 
   const apiURL = process.env.REACT_APP_API_URL
+  const [countries, setCountries] = useState(countriesInList)
   const [exchangeRates, setExchangeRates] = useState<Object>({})
   const [filteredRates, setFilteredRates] = useState<any>()
-  const [convertedArr, setConvertedArr] = useState<Object[]>([])
-  const listArray = countriesInList.map((country: any) => (
-    <tr key={country.fullName}>
+
+  // Render a table with countries in the list
+  const countriesArray = countries.map((country: any, index: number) => (
+    <tr key={country[index]}>
       <td>{country.fullName}</td>
       <td>{country.population}</td>
       <td>{Object.keys(country.currencies)}</td>
+      {country.convertAmount ? <td>{country.convertAmount}</td> : <td></td>}
     </tr>
   ))
 
@@ -43,64 +46,50 @@ export const List = ({
     const ratesArr = Object.entries(rates)
     let listCurrencies: string[] = []
 
-    // Create a new array with only currency values
+    // Create a new array with only the currency values
     list.forEach((item: any) => listCurrencies.push(item.currencies))
 
     // Create a filtered array with exchange rates for the countries that have been added to a list
-    const filteredArr = ratesArr.filter((item) =>
-      listCurrencies.some((obj) => Object.keys(obj).includes(item[0]))
-    )
-
+    const filteredArr = ratesArr.filter((item) => {
+      return listCurrencies.some((obj) => Object.keys(obj).includes(item[0]))
+    })
     setFilteredRates(filteredArr)
   }
 
-  const currencyConverter = (amount: number | undefined, rates: any[]) => {
+  // Use filtered rates and the inputed amount to convert to set a new countries array with converted amount values
+  const currencyConverter = (
+    amount: number | undefined,
+    rates: any[],
+    countriesArr: any[]
+  ) => {
     let newArr: Object[] = []
     if (rates && amount) {
-      rates.forEach((item: any, index: number) => {
-        const convertedArr = {
-          currency: rates[index][0],
-          convertedAmount: Number((item[1] * amount).toFixed(2)),
-        }
-        newArr.push(convertedArr)
-      })
-    }
-    if (newArr.length) {
-      setConvertedArr(newArr)
-    }
-  }
-
-  // Concat the arrays with country lookups and info about the converted amounts
-  const concatArrays = (countriesInList: any[], convertedArr: any[]) => {
-    let newArr: Object[] = []
-
-    convertedArr.forEach((item) => {
-      countriesInList.forEach((i) => {
-        if (Object.keys(i.currencies).includes(item.currency)) {
-          const values = {
-            fullName: i.fullName,
-            population: i.population,
-            currencies: item.currency,
-            convertedAmount: item.convertedAmount,
+      rates.forEach((item: any) => {
+        countriesArr.forEach((i, index) => {
+          if (Object.keys(i.currencies).includes(item[0])) {
+            const value = Number((item[1] * amount).toFixed(2)) // Multiply the exchange rate with the amount and round down to 2 decimals
+            const updatedVals = { ...countriesArr[index], convertAmount: value }
+            newArr.push(updatedVals)
           }
-          newArr.push(values)
-        }
+        })
       })
-    })
-
+    }
     if (newArr.length) {
-      console.log(newArr)
+      setCountries(newArr)
     }
   }
-  concatArrays(countriesInList, convertedArr)
 
   useEffect(() => {
-    getExchangeRates()
-    filterRates(countriesInList, exchangeRates)
+    setCountries(countriesInList)
   }, [countriesInList])
 
   useEffect(() => {
-    currencyConverter(convertAmount, filteredRates)
+    getExchangeRates()
+    filterRates(countries, exchangeRates)
+  }, [countries])
+
+  useEffect(() => {
+    currencyConverter(convertAmount, filteredRates, countries)
   }, [convertAmount])
 
   return (
@@ -111,10 +100,10 @@ export const List = ({
           <td>Full name</td>
           <td>Population</td>
           <td>Currencies</td>
+          <td>Converted amount</td>
         </tr>
-        {listArray}
+        {countriesArray}
       </table>
-      {JSON.stringify(convertedArr)}
     </>
   )
 }
