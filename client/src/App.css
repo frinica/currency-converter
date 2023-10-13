@@ -75,3 +75,8 @@
 .searchResults td:last-child {
   border: none;
 }
+
+.convertLabel {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
+}
