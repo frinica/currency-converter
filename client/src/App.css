@@ -57,28 +57,9 @@
   margin-bottom: 3rem;
 }
 
-.searchResults th {
-  padding: 0.5rem;
-  text-align: left;
-  background-color: #ffd46f;
-  color: black;
-}
-
-.searchResults th:last-child {
-  background-color: #282c34;
-}
-
-.searchResults td {
-  border: solid 1px #ffd46f;
-}
-
-.searchResults td:last-child {
-  border: none;
-}
-
-.convertLabel {
-  margin-right: 0.5rem;
-  font-size: 1.3rem;
+.listTable {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .listTable th {
@@ -90,4 +71,17 @@
 
 .listTable td {
   border: solid 1px #ffd46f;
+}
+
+.searchResults th:last-child {
+  background-color: #282c34;
+}
+
+.searchResults td:last-child {
+  border: none;
+}
+
+.convertLabel {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
 }

@@ -68,7 +68,7 @@ export const Search = ({
 
       <section className="sectionWrapper">
         <h3>Results</h3>
-        <table className="searchResults">
+        <table className="searchResults listTable">
           <tr>
             <th>Full name</th>
             <th>Population</th>
