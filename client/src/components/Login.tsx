@@ -40,29 +40,37 @@ export const Login = () => {
 
   return (
     <>
-      <section>
+      <section className="login">
         <h2>SIGN IN</h2>
 
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
+        <form onSubmit={handleSubmit} className="loginForm">
+          <div className="formItem">
+            <label htmlFor="email" className="formLabel">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               value={email}
               onChange={onChange}
+              className="formInput"
             />
           </div>
-          <div>
-            <label htmlFor="password">Password</label>
+          <div className="formItem">
+            <label htmlFor="password" className="formLabel">
+              Password
+            </label>
             <input
               type="password"
               name="password"
               value={password}
               onChange={onChange}
+              className="formInput"
             />
           </div>
-          <button type="submit">Sign in</button>
+          <button type="submit" className="button">
+            Sign in
+          </button>
         </form>
       </section>
     </>
